@@ -1,23 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Form from "./Form";
+import Info from "./Info";
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+  const [userData, setUserData] = useState({});
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isLogin ? (
+        <Info data={userData} setData={setUserData} login={setIsLogin} />
+      ) : (
+        <Form setData={setUserData} login={setIsLogin} />
+      )}
     </div>
   );
 }

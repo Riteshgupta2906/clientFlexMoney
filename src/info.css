@@ -1,0 +1,99 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+:root {
+  --small-green-circle: #78eea6;
+  --main-accent-color: #9b45e4;
+  --secondary-accent-color: #e13a9d;
+}
+.card__image {
+  width: 100px;
+  border-radius: 50%;
+}
+
+.card__info {
+  margin: 1em 0;
+  list-style-type: none;
+  padding: 0;
+}
+
+.card__info li {
+  display: inline-block;
+  text-align: center;
+  padding: 0.5em;
+}
+
+.card__info__stats {
+  color: var(--main-accent-color);
+  font-weight: bold;
+  font-size: 1.2em;
+  display: block;
+}
+
+.card__info__stats + span {
+  color: #969798;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.card__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card__text h2 {
+  margin-bottom: 0.3em;
+  font-size: 1.4em;
+  color: #6f6f6f;
+}
+
+.card__text p {
+  margin: 0;
+  color: #999;
+  font-size: 0.95em;
+}
+
+.card__action {
+  display: flex;
+  justify-content: space-around;
+}
+
+.card__action__button {
+  margin: 10px;
+  padding: 0.9em 1.3em;
+  text-transform: uppercase;
+  color: #fff;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  position: relative;
+}
+
+.card__action--follow {
+  background-color: var(--main-accent-color);
+}
+
+.card__action--message {
+  background-color: var(--secondary-accent-color);
+}
+
+@media (min-width: 425px) {
+  .card {
+    padding: 3em;
+  }
+
+  .card:after {
+    top: 50px;
+    right: 160px;
+  }
+
+  .card__info li {
+    padding: 1em;
+  }
+  .card__action__button {
+    padding: 0.9em 1.8em;
+  }
+}

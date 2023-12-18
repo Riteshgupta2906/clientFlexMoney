@@ -40,8 +40,8 @@ export const findUser = async (value) => {
 };
 export const updatePayment = async (value) => {
   //console.log(value);
-  const response = await fetch(domain + "/api/v1/Yoga/payment", {
-    method: "PATCH",
+  const response = await fetch(domain + "/api/v1/Yoga/update/payment", {
+    method: "POST",
 
     headers: {
       "Content-Type": "application/json",
@@ -54,8 +54,8 @@ export const updatePayment = async (value) => {
 };
 export const updateBatch = async (value) => {
   //console.log(value);
-  const response = await fetch(domain + "/api/v1/Yoga/user", {
-    method: "PATCH",
+  const response = await fetch(domain + "/api/v1/Yoga/update/batch", {
+    method: "POST",
 
     headers: {
       "Content-Type": "application/json",

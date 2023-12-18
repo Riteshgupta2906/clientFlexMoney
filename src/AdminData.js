@@ -48,9 +48,9 @@ export default function AdminData(props) {
     e.preventDefault();
     props.login(false);
   };
-
+  //console.log(userData);
   const newData = userData.map((data) => {
-    let pay = data.payment_id === null ? "Not Done" : "Done";
+    let pay = data.payment_date ? "Done" : "Not Done";
     return {
       key: data.participant_id,
       name: `${data.firstname}  ${data.lastname}`,

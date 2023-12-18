@@ -1,33 +1,38 @@
+const domain1 = "http://localhost:8000";
+const domain = "https://yogaclass-65tt.onrender.com";
 export const submitData = async (value) => {
   //console.log(value);
-  const response = await fetch(
-    "https://yogaclass-65tt.onrender.com/api/v1/Yoga",
-    {
-      method: "POST",
+  const url = domain + "/api/v1/Yoga";
+  const response = await fetch(url, {
+    method: "POST",
 
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      body: JSON.stringify(value),
-    }
-  );
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    body: JSON.stringify(value),
+  });
+
+  return response.json();
+};
+export const getAll = async () => {
+  const response = await fetch(domain + "/api/v1/Yoga", {
+    method: "Get",
+    redirect: "follow",
+  });
 
   return response.json();
 };
 export const findUser = async (value) => {
-  const response = await fetch(
-    "https://yogaclass-65tt.onrender.com/api/v1/Yoga/user",
-    {
-      method: "POST",
+  const response = await fetch(domain + "/api/v1/Yoga/user", {
+    method: "POST",
 
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      body: JSON.stringify(value),
-    }
-  );
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    body: JSON.stringify(value),
+  });
   if (response.status === 404) {
     return "No user";
   }
@@ -35,18 +40,29 @@ export const findUser = async (value) => {
 };
 export const updatePayment = async (value) => {
   //console.log(value);
-  const response = await fetch(
-    "https://yogaclass-65tt.onrender.com/api/v1/Yoga/payment",
-    {
-      method: "PATCH",
+  const response = await fetch(domain + "/api/v1/Yoga/payment", {
+    method: "PATCH",
 
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      body: JSON.stringify(value),
-    }
-  );
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    body: JSON.stringify(value),
+  });
+
+  return response.json();
+};
+export const updateBatch = async (value) => {
+  //console.log(value);
+  const response = await fetch(domain + "/api/v1/Yoga/user", {
+    method: "PATCH",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    body: JSON.stringify(value),
+  });
 
   return response.json();
 };

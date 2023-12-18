@@ -17,7 +17,8 @@ export default function Form(props) {
     lastname: "",
     email: "",
     age: "",
-    batch_id: "Batch 1",
+    gender: "",
+    batch_id: "",
   };
   const [intialValue, setIntialValue] = useState(value);
   const [isloading, setIsLoading] = useState(false);
@@ -118,17 +119,34 @@ export default function Form(props) {
               <label>Age</label>
             </div>
           </div>
-
-          <select
-            name="batch_id"
-            value={intialValue.batch_id}
-            onChange={handleChange}
-          >
-            <option>Batch 1</option>
-            <option>Batch 2</option>
-            <option>Batch 3</option>
-            <option>Batch 4</option>
-          </select>
+          <div className="select">
+            <select
+              name="batch_id"
+              value={intialValue.batch_id}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled selected hidden>
+                Batch
+              </option>
+              <option>Batch 1</option>
+              <option>Batch 2</option>
+              <option>Batch 3</option>
+              <option>Batch 4</option>
+            </select>
+            <select
+              name="gender"
+              value={intialValue.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled selected hidden>
+                Gender
+              </option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
 
           <div className="pay">
             <div className="form-row submit-btn">
@@ -137,13 +155,6 @@ export default function Form(props) {
                 <input type="submit" value="Enroll Now" />
               </div>
             </div>
-
-            {/* <div className="form-row submit-btn">
-              <div className="input-data">
-                <div className="inner"></div>
-                <input type="submit" value="Pay Later" />
-              </div>
-            </div> */}
           </div>
         </form>
       </div>

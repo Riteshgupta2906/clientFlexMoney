@@ -168,6 +168,7 @@ form .form-row .textarea {
 select {
   font-size: 17px;
   margin-left: 15px;
+  margin-right: 34%;
   width: 100px;
   border: black;
 }

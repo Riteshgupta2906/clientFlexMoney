@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { updatePayment, monthsBetweenDates } from "./ApiFunction";
+import { updatePayment, monthsBetweenDates, updateBatch } from "./ApiFunction";
 import "./info.css";
 import Swal from "sweetalert2";
 const checkRepayment = (datePay) => {
@@ -18,12 +18,13 @@ export default function Info({ data, setData, login }) {
     participant_id,
     firstname,
     lastname,
-    email,
+    gender,
     age,
     batch_id,
     payment_date,
   } = data;
   const [payDate, setPayDate] = useState(checkRepayment(payment_date));
+  const [batch, setBatch] = useState(batch_id);
 
   const handlePay = async () => {
     console.log("clicked");
@@ -44,6 +45,38 @@ export default function Info({ data, setData, login }) {
       });
     }
   };
+
+  const batchChange = async () => {
+    (async () => {
+      const { value: b } = await Swal.fire({
+        title: "Select Batch",
+        input: "select",
+        inputOptions: {
+          Batch1: "Batch 1",
+          Batch2: "Batch 2",
+          Batch3: "Batch 3",
+          Batch4: "Batch 4",
+        },
+        inputPlaceholder: "Select Batch",
+        showCancelButton: true,
+      });
+      if (b) {
+        const obj = { participant_id, batch_id: b };
+        const data = await updateBatch(obj);
+        if (data.msg === "OK") {
+          Swal.fire({
+            icon: "success",
+            title: "Batch Updated",
+            timer: 2000,
+            showConfirmButton: false,
+          });
+        }
+
+        setBatch(b);
+      }
+    })();
+  };
+
   const nextMonth = (date) => {
     const newDate = new Date(Number(date));
     //console.log(newDate);
@@ -56,19 +89,19 @@ export default function Info({ data, setData, login }) {
     login(false);
     setData({});
   };
+  let imageUrl =
+    gender === "Male"
+      ? "https://spaces-cdn.clipsafari.com/n2rusxii80nx0dtcw027jvsgfczz"
+      : "https://easydrawingguides.com/wp-content/uploads/2022/01/how-to-draw-a-cartoon-woman-featured-image-1200-801x1024.png";
   return (
     <>
       <div className="container">
         <div className="text">User Data</div>
         <div className="card">
-          <img
-            src="https://spaces-cdn.clipsafari.com/n2rusxii80nx0dtcw027jvsgfczz"
-            className="card__image"
-            alt=""
-          />
+          <img src={imageUrl} className="card__image" alt="" />
           <div className="card__text">
             <h2>{`${firstname} ${lastname}`}</h2>
-            <p>{batch_id}</p>
+            <p>{batch}</p>
           </div>
           <ul className="card__info">
             <li>
@@ -102,6 +135,12 @@ export default function Info({ data, setData, login }) {
               onClick={logOutHandler}
             >
               Log Out
+            </button>
+            <button
+              className="card__action__button card__action--follow"
+              onClick={batchChange}
+            >
+              Change Batch
             </button>
           </div>
         </div>

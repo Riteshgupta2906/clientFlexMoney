@@ -5,6 +5,7 @@
 
 - [Yoga App](https://yoga-btv3.onrender.com/) : User InterFace
 - [Backend Github](https://github.com/Riteshgupta2906/books) : All the Api References and DataBase ER Diagram Present Here
+- [Google Drive Link](https://drive.google.com/file/d/1BLSBEuYyDGu_HvosFpaoRcR6WNM5g9Xh/view) : A walkThrough video of the Interface
 
 #### User Registration:
 
@@ -24,6 +25,8 @@
 - Admins use specific credentials to access the admin portal.
 - Upon login, administrators gain comprehensive visibility into registered user data.
 - User information is presented, encompassing details such as name, age, email, date of joining, and payment status.
+##### Admin Login Id :  test@gmail.com
+##### Admin Password : test@1234
 
 ## ER Diagram Screenshot
 

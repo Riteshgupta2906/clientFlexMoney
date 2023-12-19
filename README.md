@@ -1,6 +1,11 @@
 
 # Yoga App
 
+##  Links
+
+- [Yoga App](https://yoga-btv3.onrender.com/) : User InterFace
+- [Backend Github](https://github.com/Riteshgupta2906/books) : All the Api References and DataBase ER Diagram Present Here
+
 #### User Registration:
 
 - Upon application startup, users encounter a Register tab.
@@ -33,10 +38,7 @@
 **DataBase:** PostgreSQL
 
 
-##  Links
 
-- [Yoga App](https://yoga-btv3.onrender.com/) : User InterFace
-- [Backend Github](https://github.com/Riteshgupta2906/books) : All the Api References and DataBase ER Diagram Present Here
 
 
 

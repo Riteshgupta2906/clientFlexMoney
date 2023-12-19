@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { getAll } from "./ApiFunction";
 import React from "react";
 import { Table } from "antd";
+import { Modal } from "./Modal";
 const columns = [
   {
     title: "Name",
@@ -29,6 +30,11 @@ const columns = [
     key: "gender",
   },
   {
+    title: "Date of Joining",
+    dataIndex: "doj",
+    key: "doj",
+  },
+  {
     title: "Payment",
     dataIndex: "payment",
     key: "payment",
@@ -37,6 +43,7 @@ const columns = [
 
 export default function AdminData(props) {
   const [userData, setUserData] = useState([]);
+
   useEffect(() => {
     async function getData() {
       const res = await getAll();
@@ -51,12 +58,15 @@ export default function AdminData(props) {
   //console.log(userData);
   const newData = userData.map((data) => {
     let pay = data.payment_date ? "Done" : "Not Done";
+    let newDate = new Date(data.date_of_joining);
+    let date = newDate.toLocaleDateString();
     return {
       key: data.participant_id,
       name: `${data.firstname}  ${data.lastname}`,
       email: data.email,
       gender: data.gender,
       age: data.age,
+      doj: date,
       batch: data.batch_id,
       payment: pay,
     };

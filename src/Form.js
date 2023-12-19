@@ -41,7 +41,7 @@ export default function Form(props) {
         timer: 2000,
         showConfirmButton: false,
       });
-      console.log(data1);
+
       props.login(true);
       props.setData(data1.data);
     } else {
@@ -59,7 +59,12 @@ export default function Form(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const newValues = { participant_id: token(), ...intialValue };
+    const newValues = {
+      batch_table_id: token(),
+      payment_id: token(),
+      participant_id: token(),
+      ...intialValue,
+    };
 
     handleData(newValues);
   };
@@ -129,10 +134,10 @@ export default function Form(props) {
               <option value="" disabled selected hidden>
                 Batch
               </option>
-              <option>Batch 1</option>
-              <option>Batch 2</option>
-              <option>Batch 3</option>
-              <option>Batch 4</option>
+              <option>Batch1 </option>
+              <option>Batch2 </option>
+              <option>Batch3 </option>
+              <option>Batch4 </option>
             </select>
             <select
               name="gender"

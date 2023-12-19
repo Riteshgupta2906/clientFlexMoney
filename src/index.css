@@ -203,3 +203,7 @@ nav a:hover {
 ul {
   list-style-type: none;
 }
+.batchText {
+  color: red;
+  margin-top: 10px;
+}

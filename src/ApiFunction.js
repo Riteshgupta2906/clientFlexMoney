@@ -23,6 +23,22 @@ export const getAll = async () => {
 
   return response.json();
 };
+export const getBatch = async (value) => {
+  const response = await fetch(domain + "/api/v1/Yoga/batch", {
+    method: "POST",
+
+    headers: {
+      "Content-Type": "application/json",
+    },
+    redirect: "follow",
+    body: JSON.stringify(value),
+  });
+  if (response.status === 404) {
+    return "No user";
+  }
+  return response.json();
+};
+
 export const findUser = async (value) => {
   const response = await fetch(domain + "/api/v1/Yoga/user", {
     method: "POST",
@@ -66,8 +82,8 @@ export const updateBatch = async (value) => {
 
   return response.json();
 };
+
 export function monthsBetweenDates(date1, date2) {
-  //   console.log(typeof date1, typeof date2);
   // Ensure date1 is always earlier than or equal to date2
   if (date1 > date2) {
     const temp = date1;
@@ -76,7 +92,8 @@ export function monthsBetweenDates(date1, date2) {
   }
 
   let months = (date2.getFullYear() - date1.getFullYear()) * 12;
+  //console.log(months);
   months += date2.getMonth() - date1.getMonth();
-
+  //console.log(months);
   return months;
 }

@@ -1,17 +1,13 @@
-import { useState } from "react";
-import { updatePayment, monthsBetweenDates, updateBatch } from "./ApiFunction";
+import { useEffect, useState } from "react";
+import {
+  updatePayment,
+  monthsBetweenDates,
+  updateBatch,
+  getBatch,
+} from "./ApiFunction";
 import "./info.css";
 import Swal from "sweetalert2";
-const checkRepayment = (datePay) => {
-  if (datePay !== null) {
-    const newDate = new Date(Number(datePay));
-
-    const referenceDate = new Date();
-
-    if (monthsBetweenDates(newDate, referenceDate) !== 0) return null;
-  }
-  return datePay;
-};
+import { Modal } from "./Modal";
 
 export default function Info({ data, setData, login }) {
   const {
@@ -21,14 +17,39 @@ export default function Info({ data, setData, login }) {
     gender,
     age,
     batch_id,
+    date_of_joining,
     payment_date,
   } = data;
-  const [payDate, setPayDate] = useState(checkRepayment(payment_date));
-  const [batch, setBatch] = useState(batch_id);
+  const [payDate, setPayDate] = useState(payment_date);
+  const [batchState, setBatchState] = useState({});
+  const [amount, setAmount] = useState(0);
+  const [isloading, setIsLoading] = useState(false);
+  useEffect(() => {
+    if (payDate === null) {
+      const referenceDate = new Date();
+      const doj = new Date(date_of_joining);
+      let temp = monthsBetweenDates(doj, referenceDate);
+
+      setAmount((temp + 1) * 500);
+    } else {
+      const referenceDate = new Date();
+      const doj = new Date(payDate);
+      let temp = monthsBetweenDates(doj, referenceDate);
+      if (temp !== 0) setPayDate(null);
+    }
+  }, [date_of_joining, payDate]);
+  useEffect(() => {
+    async function getData() {
+      const res = await getBatch({ participant_id });
+      // console.log(res);
+      if (res) setBatchState(res.data[0]);
+    }
+    getData();
+  }, []);
 
   const handlePay = async () => {
-    console.log("clicked");
-    const date = Date.now();
+    setIsLoading(true);
+    const date = new Date().toUTCString();
 
     const obj = {
       participant_id,
@@ -37,6 +58,10 @@ export default function Info({ data, setData, login }) {
     const data = await updatePayment(obj);
     if (data.msg === "OK") {
       setPayDate(date);
+      setAmount(0);
+      setIsLoading(false);
+      setBatchState({});
+
       Swal.fire({
         icon: "success",
         title: "Payment Completed",
@@ -52,18 +77,22 @@ export default function Info({ data, setData, login }) {
         title: "Select Batch",
         input: "select",
         inputOptions: {
-          Batch1: "Batch 1",
-          Batch2: "Batch 2",
-          Batch3: "Batch 3",
-          Batch4: "Batch 4",
+          Batch_1: "Batch 1",
+          Batch_2: "Batch 2",
+          Batch_3: "Batch 3",
+          Batch_4: "Batch 4",
         },
         inputPlaceholder: "Select Batch",
         showCancelButton: true,
       });
       if (b) {
-        const obj = { participant_id, batch_id: b };
+        const date = nextMonth(new Date().toUTCString());
+        const obj = { participant_id, batch_id: b, date_of_change: date };
         const data = await updateBatch(obj);
         if (data.msg === "OK") {
+          const date = nextMonth(new Date().toUTCString());
+          const obj = { batch_id: b, date_of_change: date };
+          setBatchState(obj);
           Swal.fire({
             icon: "success",
             title: "Batch Updated",
@@ -71,15 +100,12 @@ export default function Info({ data, setData, login }) {
             showConfirmButton: false,
           });
         }
-
-        setBatch(b);
       }
     })();
   };
 
   const nextMonth = (date) => {
-    const newDate = new Date(Number(date));
-    //console.log(newDate);
+    const newDate = new Date(date);
     newDate.setMonth(newDate.getMonth() + 1, 1);
 
     return newDate.toLocaleDateString();
@@ -96,12 +122,16 @@ export default function Info({ data, setData, login }) {
   return (
     <>
       <div className="container">
+        {isloading && Modal()}
         <div className="text">User Data</div>
         <div className="card">
           <img src={imageUrl} className="card__image" alt="" />
           <div className="card__text">
             <h2>{`${firstname} ${lastname}`}</h2>
-            <p>{batch}</p>
+            <p>{batch_id}</p>
+            {batchState.date_of_change && (
+              <h6 className="batchText">{`*Batch change to ${batchState.batch_id} Applied from ${batchState.date_of_change} `}</h6>
+            )}
           </div>
           <ul className="card__info">
             <li>
@@ -114,6 +144,14 @@ export default function Info({ data, setData, login }) {
               </span>
               <span>Payment</span>
             </li>
+
+            {amount !== 0 && (
+              <li>
+                <span className="card__info__stats">{amount}</span>
+                <span>Amount</span>
+              </li>
+            )}
+
             {payDate && (
               <li>
                 <span className="card__info__stats">{nextMonth(payDate)}</span>

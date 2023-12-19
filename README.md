@@ -25,6 +25,9 @@
 - Upon login, administrators gain comprehensive visibility into registered user data.
 - User information is presented, encompassing details such as name, age, email, date of joining, and payment status.
 
+## ER Diagram Screenshot
+
+![ER Diagram Screenshot](https://i.ibb.co/rfkB6HW/ER-Diagram-of-Database.png)
 
 ## Assumption
 - Users are considered different from one another based on their unique email IDs.

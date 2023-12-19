@@ -1,7 +1,7 @@
 import { useState } from "react";
 import AdminData from "./AdminData";
 export default function Admin() {
-  const value = { email: "", password: "" };
+  const value = { email: "test@gmail.com", password: "test@1234" };
   const [intialValue, setIntialValue] = useState(value);
   const [adminLogin, setAdminLogin] = useState(false);
   const handleChange = (e) => {
